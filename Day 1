@@ -1,0 +1,61 @@
+Circle and Rectangle Overlapping
+class Solution {
+    public boolean checkOverlap(int radius, int xCenter, int yCenter, int x1, int y1, int x2, int y2) {
+        int minCenter_x = Math.min(x2, xCenter);
+        int minCenter_y = Math.min(y2, yCenter);
+
+        int nearstx = Math.max(x1, minCenter_x);
+        int nearsty = Math.max(y1, minCenter_y);
+
+        int distx = nearstx - xCenter;
+        int disty = nearsty - yCenter;
+
+        double dist = Math.pow(distx, 2) + Math.pow(disty, 2);
+        if(dist <= Math.pow(radius, 2)){
+            return true;
+        }
+        return false;
+    }
+}
+
+Find the Winner of the Circular Game
+class Solution {
+    public int findTheWinner(int n, int k) {
+        int ans=0;
+        for(int i=2; i<=n; i++){
+            ans = (ans+k) % i;
+        }
+        return ans+1;
+    }
+}
+
+Image Smoother
+class Solution {
+    public int[][] imageSmoother(int[][] img) {
+        int n = img.length;
+        int m = img[0].length;
+        int res[][]=new int[n][m];
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                res[i][j] = smoot(img, i, j);
+            }
+        }
+        return res;
+    }
+    public static int smoot(int img[][], int x, int y){
+        int n=img.length;
+        int m=img[0].length;
+        int total=0;
+        int count=0;
+        for(int i=-1; i<=1; i++){
+            for(int j=-1; j<=1; j++){
+                int neighRow = i+x;
+                int neighCol = j+y;
+                if(neighRow<0 || neighRow>=n || neighCol<0 || neighCol>=m) continue;
+                total += img[neighRow][neighCol];
+                count++;
+            }
+        }
+        return total/count;
+    }
+}
