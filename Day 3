@@ -1,0 +1,54 @@
+Wiggle Sort II
+class Solution {
+    public void wiggleSort(int[] nums) {
+        // sort the array
+        Arrays.sort(nums);
+
+        // make the new array and fill it
+        int n=nums.length;
+        int i=1;
+        int j=n-1;
+        int res[]=new int[n];
+        while(i<n){
+            res[i]=nums[j];
+            i += 2;
+            j--;
+        }
+        i=0;
+        while(i<n){
+            res[i]=nums[j];
+            i += 2;
+            j--;
+        }
+
+        // restore the original array from new array
+        for(i=0; i<n; i++){
+            nums[i]=res[i];
+        }
+    }
+}
+
+Count Number of Nice Subarrays
+class Solution {
+    public int numberOfSubarrays(int[] nums, int k) {
+        if(k<0) return 0;
+        return helper(nums, k) - helper(nums, k-1);
+    }
+    public static int helper(int nums[], int k){
+        if(k<0) return 0;
+        int l=0;
+        int r=0;
+        int sum=0;
+        int count=0;
+        while(r<nums.length){
+            sum += nums[r]%2;
+            while(sum > k){
+                sum = sum - nums[l]%2;
+                l++;
+            }
+            count = count + (r-l+1);
+            r++;
+        }
+        return count;
+    }
+}
